@@ -3,19 +3,18 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/go-sql-driver/mysql"
 	"log"
 	"os"
-	"github.com/go-sql-driver/mysql"
 )
 
 var db *sql.DB
 
-
 type Album struct {
-	ID int64
-	Title string
+	ID     int64
+	Title  string
 	Artist string
-	Price float32
+	Price  float32
 }
 
 func main() {
@@ -53,16 +52,16 @@ func main() {
 	fmt.Printf("Album found: %v\n", alb)
 
 	albID, err := addAlbum(Album{
-    		Title:  "The Modern Sound of Betty Carter",
-    		Artist: "Betty Carter",
-    		Price:  49.99,
+		Title:  "The Modern Sound of Betty Carter",
+		Artist: "Betty Carter",
+		Price:  49.99,
 	})
 
 	if err != nil {
-    		log.Fatal(err)
+		log.Fatal(err)
 	}
 	fmt.Printf("ID of added album: %v\n", albID)
-	
+
 }
 
 func albumsByArtist(name string) ([]Album, error) {
@@ -78,8 +77,8 @@ func albumsByArtist(name string) ([]Album, error) {
 	for rows.Next() {
 		var alb Album
 		if err := rows.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
- return nil, fmt.Errorf("albumsByArtist: %q: %v", name, err)
-}
+			return nil, fmt.Errorf("albumsByArtist: %q: %v", name, err)
+		}
 
 		albums = append(albums, alb)
 
@@ -90,9 +89,8 @@ func albumsByArtist(name string) ([]Album, error) {
 	return albums, nil
 }
 
-
 func albumByID(id int64) (Album, error) {
-	
+
 	var alb Album
 
 	row := db.QueryRow("SELECT * FROM album WHERE id = ?", id)
@@ -107,27 +105,19 @@ func albumByID(id int64) (Album, error) {
 
 }
 
-
 func addAlbum(alb Album) (int64, error) {
 
-    result, err := db.Exec("INSERT INTO album (title, artist, price) VALUES (?, ?, ?)", alb.Title, alb.Artist, alb.Price)
+	result, err := db.Exec("INSERT INTO album (title, artist, price) VALUES (?, ?, ?)", alb.Title, alb.Artist, alb.Price)
 
-    if err != nil {
-        return 0, fmt.Errorf("addAlbum: %v", err)
-    }
+	if err != nil {
+		return 0, fmt.Errorf("addAlbum: %v", err)
+	}
 
-    id, err := result.LastInsertId()
+	id, err := result.LastInsertId()
 
-    if err != nil {
-        return 0, fmt.Errorf("addAlbum: %v", err)
-    }
+	if err != nil {
+		return 0, fmt.Errorf("addAlbum: %v", err)
+	}
 
-    return id, nil
+	return id, nil
 }
-
-
-
-
-
-
-
