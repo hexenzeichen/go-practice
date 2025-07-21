@@ -1,8 +1,8 @@
 package main
 
 import (
-"fmt"
-"math"
+	"fmt"
+	"math"
 )
 
 func compute(fn func(float64, float64) float64) float64 {
@@ -17,5 +17,5 @@ func main() {
 	fmt.Println(hypot(5, 12))
 	fmt.Println(compute(hypot))
 	fmt.Println(compute(math.Pow))
-	
+
 }
