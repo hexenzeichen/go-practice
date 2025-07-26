@@ -1,8 +1,8 @@
 package main
 
 import (
-"fmt"
-"math"
+	"fmt"
+	"math"
 )
 
 type Vertex struct {
@@ -21,7 +21,7 @@ func main() {
 	v := Vertex{3, 4}
 	fmt.Println(v.Abs())
 	fmt.Println(AbsFunc(v))
-	
+
 	p := &Vertex{3, 4}
 	fmt.Println(p.Abs())
 	fmt.Println(AbsFunc(*p))
