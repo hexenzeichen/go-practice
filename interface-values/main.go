@@ -1,8 +1,8 @@
 package main
 
-import(
-"fmt"
-"math"
+import (
+	"fmt"
+	"math"
 )
 
 type I interface {
