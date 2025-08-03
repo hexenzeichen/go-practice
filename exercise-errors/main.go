@@ -10,8 +10,6 @@ func (e ErrNegativeSqrt) Error() string {
 	return "cannot Sqrt negative number: " + fmt.Sprintf("%.0f", e)
 }
 
-
-
 func Sqrt(x float64) (float64, error) {
 
 	if x < 0 {
@@ -31,7 +29,6 @@ func Sqrt(x float64) (float64, error) {
 
 	return z, nil
 }
-
 
 func main() {
 	fmt.Println(Sqrt(2))
