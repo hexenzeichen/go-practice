@@ -1,9 +1,9 @@
 package main
 
-import(
-"fmt"
-"io"
-"strings"
+import (
+	"fmt"
+	"io"
+	"strings"
 )
 
 func main() {
