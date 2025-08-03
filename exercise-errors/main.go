@@ -4,8 +4,19 @@ import (
 	"fmt"
 )
 
+type ErrNegativeSqrt float64
+
+func (e ErrNegativeSqrt) Error() string {
+	return "cannot Sqrt negative number: " + fmt.Sprintf("%.0f", e)
+}
+
+
 
 func Sqrt(x float64) (float64, error) {
+
+	if x < 0 {
+		return 0, ErrNegativeSqrt(x)
+	}
 
 	z := 1.0
 	d := z
