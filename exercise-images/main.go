@@ -10,7 +10,7 @@ type Image struct{
 	w, h int
 }
 
-func (img Image) ColorModel() color.Mode {
+func (img Image) ColorModel() color.Model {
 	return color.RGBAModel
 }
 
@@ -26,6 +26,6 @@ func (img Image) At(x, y int) color.Color {
 }
 
 func main() {
-	m := Image{}
+	m := Image{255, 255}
 	pic.ShowImage(m)
 }
