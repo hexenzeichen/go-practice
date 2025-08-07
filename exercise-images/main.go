@@ -6,7 +6,9 @@ import(
 	"golang.org/x/tour/pic"
 )
 
-type Image struct{}
+type Image struct{
+	w, h int
+}
 
 func main() {
 	m := Image{}
