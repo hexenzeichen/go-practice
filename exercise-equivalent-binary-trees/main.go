@@ -10,7 +10,13 @@ type Tree struct {
 
 
 
-func Walk(t *tree.Tree, ch chan int)
+func Walk(t *tree.Tree, ch chan int) {
+	if t != nil {
+		Walk(t.Left, ch)
+		ch <- t.Value
+		Walk(t.Right, ch)
+	}
+}
 
 func Same(t1, t2 *tree.Tree) bool
 
