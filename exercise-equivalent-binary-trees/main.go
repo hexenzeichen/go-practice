@@ -1,6 +1,9 @@
 package main
 
-import "golang.org/x/tour/tree"
+import (
+	"golang.org/x/tour/tree"
+	"fmt"
+)
 
 type Tree struct {
 	Left *Tree
@@ -35,7 +38,7 @@ func Same(t1, t2 *tree.Tree) bool {
 		if ok1 != ok2 || v1 != v2 {
 			return false
 		}
-		if !ok {
+		if !ok1 {
 			break;
 		}
 	}
