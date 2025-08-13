@@ -1,12 +1,12 @@
 package main
 
 import (
-	"golang.org/x/tour/tree"
 	"fmt"
+	"golang.org/x/tour/tree"
 )
 
 type Tree struct {
-	Left *Tree
+	Left  *Tree
 	Value int
 	Right *Tree
 }
@@ -39,7 +39,7 @@ func Same(t1, t2 *tree.Tree) bool {
 			return false
 		}
 		if !ok1 {
-			break;
+			break
 		}
 	}
 
