@@ -18,6 +18,12 @@ func Walk(t *tree.Tree, ch chan int) {
 	}
 }
 
+
+func Walking(t *tree.Tree, ch chan int) {
+	Walk(t, ch)
+	defer close(ch)
+}
+
 func Same(t1, t2 *tree.Tree) bool
 
 func main() {
