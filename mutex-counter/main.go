@@ -8,9 +8,8 @@ import (
 
 type SafeCounter struct {
 	mu sync.Mutex
-	v map[string]int
+	v  map[string]int
 }
-
 
 func (c *SafeCounter) Inc(key string) {
 	c.mu.Lock()
