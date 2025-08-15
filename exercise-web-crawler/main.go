@@ -1,36 +1,61 @@
 package main
 
+
 import (
 	"fmt"
 	"sync"
 )
+
 
 type SafeCounter struct {
 	v map[string]bool
 	mux sync.Mutex
 }
 
+
 type Fetcher interface {
 	Fetch(url string) (body string, urls []string, err error)
 }
 
+
 var cnt SafeCounter = SafeCounter{v: make(map[string]bool)}
 
-func Crawl(url string, depth int, fetcher Fetcher) {
+
+func Crawl(url string, depth int, fetcher Fetcher, exit chan bool) {
+
 	if depth <= 0 {
+		exit <- true
 		return
 	}
+	
+	cnt.mux.Lock()
+	_, ok := cnt.v[url]
+	if ok == false {
+		cnt.v[url] = true
+		cnt.mux.Unlock()
+	} else {
+		exit <- true
+		cnt.mux.Unlock()
+		return
+	}
+
 	body, urls, err := fetcher.Fetch(url)
 	if err != nil {	
 		fmt.Println(err)
+		exit <- true
 		return
 	}
 	fmt.Printf("found: %s %q\n", url, body)
+
+	e := make(chan bool)
 	for _, u := range urls {
-		Crawl(u, depth-1, fetcher)
+		go Crawl(u, depth-1, fetcher, e)
 	}
 
-	return
+	for i := 0; i < len(urls); i++ {
+		<-e
+	}
+	exit <- true
 }
 
 func main() {
