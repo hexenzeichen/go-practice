@@ -59,7 +59,9 @@ func Crawl(url string, depth int, fetcher Fetcher, exit chan bool) {
 }
 
 func main() {
-	Crawl("https://golang.org/", 4, fetcher)
+	exit := make(chan bool)
+	Crawl("https://golang.org/", 4, fetcher, exit)
+	<-exit
 }
 
 type fakeFetcher map[string]*fakeResult
