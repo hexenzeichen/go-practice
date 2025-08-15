@@ -2,7 +2,13 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
+
+type SafeCounter struct {
+	v map[string]bool
+	mux sync.Mutex
+}
 
 type Fetcher interface {
 	Fetch(url string) (body string, urls []string, err error)
