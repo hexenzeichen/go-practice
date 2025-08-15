@@ -14,6 +14,8 @@ type Fetcher interface {
 	Fetch(url string) (body string, urls []string, err error)
 }
 
+var cnt SafeCounter = SafeCounter{v: make(map[string]bool)}
+
 func Crawl(url string, depth int, fetcher Fetcher) {
 	if depth <= 0 {
 		return
