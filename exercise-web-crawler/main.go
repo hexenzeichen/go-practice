@@ -1,25 +1,20 @@
 package main
 
-
 import (
 	"fmt"
 	"sync"
 )
 
-
 type SafeCounter struct {
-	v map[string]bool
+	v   map[string]bool
 	mux sync.Mutex
 }
-
 
 type Fetcher interface {
 	Fetch(url string) (body string, urls []string, err error)
 }
 
-
 var cnt SafeCounter = SafeCounter{v: make(map[string]bool)}
-
 
 func Crawl(url string, depth int, fetcher Fetcher, exit chan bool) {
 
@@ -27,7 +22,7 @@ func Crawl(url string, depth int, fetcher Fetcher, exit chan bool) {
 		exit <- true
 		return
 	}
-	
+
 	cnt.mux.Lock()
 	_, ok := cnt.v[url]
 	if ok == false {
@@ -40,7 +35,7 @@ func Crawl(url string, depth int, fetcher Fetcher, exit chan bool) {
 	}
 
 	body, urls, err := fetcher.Fetch(url)
-	if err != nil {	
+	if err != nil {
 		fmt.Println(err)
 		exit <- true
 		return
@@ -79,15 +74,15 @@ func (f fakeFetcher) Fetch(url string) (string, []string, error) {
 }
 
 var fetcher = fakeFetcher{
-	"https://golang.org": &fakeResult {
-		"The Go Programming Language", 
+	"https://golang.org": &fakeResult{
+		"The Go Programming Language",
 		[]string{
 			"https://golang.org/pkg/",
 			"https://golang.org/cmd/",
 		},
 	},
-	"https://golang.org/pkg": &fakeResult {
-		"Packages", 
+	"https://golang.org/pkg": &fakeResult{
+		"Packages",
 		[]string{
 			"https://golang.org/",
 			"https://golang.org/cmd/",
@@ -95,15 +90,15 @@ var fetcher = fakeFetcher{
 			"https://golang.org/pkg/os",
 		},
 	},
-	"https://golang.org/pkg/fmt/": &fakeResult {
-		"Package fmt", 
+	"https://golang.org/pkg/fmt/": &fakeResult{
+		"Package fmt",
 		[]string{
 			"https://golang.org/",
 			"https://golang.org/pkg/",
 		},
 	},
-	"https://golang.org/pkg/os/": &fakeResult {
-		"Package fmt", 
+	"https://golang.org/pkg/os/": &fakeResult{
+		"Package fmt",
 		[]string{
 			"https://golang.org/",
 			"https://golang.org/pkg/",
