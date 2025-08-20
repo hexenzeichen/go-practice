@@ -8,5 +8,5 @@ import (
 
 func main() {
 	fmt.Println(morestrings.ReverseRunes("!oG ,olleH"))
-	fmt.Println(cmp.diff("Hello, Go!", "Hello, World!"))
+	fmt.Println(cmp.Diff("Hello, Go!", "Hello, World!"))
 }
